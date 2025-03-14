@@ -1,0 +1,29 @@
+.container {
+  min-width: 600px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 4.56rem;
+}
+
+header {
+  height: 9rem;
+  width: 350px;
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: #8E8E8E;
+    font-weight: 500;
+    text-align: center;
+    padding: 0 30px;
+  }
+}
