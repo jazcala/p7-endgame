@@ -84,10 +84,39 @@
         padding: 5px;
         border-radius: 5px;
         font-size: 0.75rem;
-        font-weight: 800;
+        font-weight: 700;
         border: none;
         margin: 2px;
       }
+    }
+  }
+
+  .keyboard {
+    width: 480px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 64px auto 36px;
+
+    .key {
+      width: 40px;
+      height: 40px;
+      background-color: #FCBA29;
+      text-transform: uppercase;
+      border: 1px solid #D7D7D7;
+      border-radius: 5px;
+      margin: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+
+      &.good {
+        background-color: #10A95B;
+      }
+
+      &.wrong {
+        background-color: #EC5D49;
+      }
+
     }
   }
 

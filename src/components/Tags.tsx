@@ -4,6 +4,7 @@ export default function Tags({ tagsList }: { tagsList: tagProps[] }) {
     <div className="tagsList">
       {tagsList.map((tag) => (
         <button
+          key={tag.id}
           style={{
             backgroundColor: `${tag.backgroundColor}`,
             color: `${tag.color}`,
