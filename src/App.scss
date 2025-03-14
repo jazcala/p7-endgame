@@ -74,7 +74,7 @@
 
     .tagsList {
       max-width: 300px;
-      margin-top: 2.25rem;
+      margin: 2.25rem auto;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -88,6 +88,29 @@
         border: none;
         margin: 2px;
       }
+    }
+  }
+
+  .word {
+    width: 480px;
+    text-align: center;
+
+    .letter {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border-bottom: 1px solid #F9F4D4;
+      margin: 2px;
+      padding: 5px;
+      background-color: #323232;
+      color: #F9F4D4;
+
+      &.wrong {
+        color: #EC5D49;
+      }
+
     }
   }
 
@@ -124,6 +147,7 @@
     background-color: #11B5E5;
     text-align: center;
     width: 200px;
+    height: 40px;
     padding: 5px;
     border-radius: 5px;
     font-weight: 600;

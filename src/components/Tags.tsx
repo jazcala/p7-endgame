@@ -1,7 +1,7 @@
 import { tagProps } from "../types/types";
 export default function Tags({ tagsList }: { tagsList: tagProps[] }) {
   return (
-    <div className="tagsList">
+    <section className="tagsList">
       {tagsList.map((tag) => (
         <button
           key={tag.id}
@@ -13,6 +13,6 @@ export default function Tags({ tagsList }: { tagsList: tagProps[] }) {
           {tag.name}
         </button>
       ))}
-    </div>
+    </section>
   );
 }

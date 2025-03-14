@@ -2,10 +2,11 @@ import GameStatus from "./GameStatus";
 import languagetagsData from "../data/tagsData.json";
 import { useState } from "react";
 import Tags from "./Tags";
-import { tagProps, keyboardProps } from "../types/types";
+import { tagProps, keyboardProps, letterProps } from "../types/types";
 import NewGameButton from "./NewGameButton";
 import Keyboard from "./Keyboard";
 import { nanoid } from "nanoid";
+import Word from "./Word";
 
 export default function Main() {
   //testing values
@@ -17,6 +18,11 @@ export default function Main() {
   const alphabetLetters = "abcdefghijklmnopqrstuvwxyz";
   const [keyboardKeys, setKeyboardKeys] = useState<keyboardProps[]>(() =>
     initializeKeyboard()
+  );
+  const word = "ELEPHANT";
+
+  const [currentWord, setCurrentWord] = useState<letterProps[]>(() =>
+    initializeCurrentWord()
   );
 
   // const word:string = "refactor";
@@ -35,11 +41,18 @@ export default function Main() {
       .map((letter) => ({ id: nanoid(), letter, status: "" }));
   }
 
+  function initializeCurrentWord() {
+    //word status hidden good wrong
+    return word
+      .split("")
+      .map((letter) => ({ id: nanoid(), letter, status: "hidden" }));
+  }
+
   return (
     <main>
       <GameStatus gameStatus={gameStatus} tagToDismiss={tag} />
       <Tags tagsList={languageTags} />
-      <div>Word to guess</div>
+      <Word currentWord={currentWord} />
       <Keyboard keyboardKeys={keyboardKeys} />
       {(gameStatus === "win" || gameStatus === "gameOver") && <NewGameButton />}
     </main>

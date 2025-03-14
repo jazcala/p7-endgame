@@ -11,3 +11,9 @@ export interface keyboardProps {
   letter: string;
   status: string;
 }
+
+export interface letterProps {
+  id: string,
+  letter: string,
+  status: string
+}

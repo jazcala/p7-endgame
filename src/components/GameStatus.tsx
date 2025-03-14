@@ -32,8 +32,8 @@ export default function GameStatus({
   }
 
   return (
-    <div className={`messageContainer ${gameStatus}`}>
+    <section className={`messageContainer ${gameStatus}`}>
       {setMessage(gameStatus)}
-    </div>
+    </section>
   );
 }
