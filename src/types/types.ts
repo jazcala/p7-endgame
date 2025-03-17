@@ -7,13 +7,12 @@ export interface tagProps {
 }
 
 export interface keyboardProps {
-  id: string,
   letter: string;
-  status: string;
+  status: string; // default, good, wrong
 }
 
 export interface letterProps {
   id: string,
   letter: string,
-  status: string
+  status: string //hidden good wrong
 }
