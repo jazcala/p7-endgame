@@ -87,13 +87,24 @@
         font-weight: 700;
         border: none;
         margin: 2px;
+
+        &.isDismissed {
+          opacity: 0.2;
+        }
+      }
+
+      .overlay {
+        position: absolute;
+        float: left;
+        padding-left: 20px;
       }
     }
   }
 
   .word {
     width: 480px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
 
     .letter {
       display: inline-flex;

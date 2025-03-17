@@ -1,3 +1,11 @@
-export default function NewGameButton() {
-  return <button className="newGameButton">New Game</button>;
+export default function NewGameButton({
+  handleNewGame,
+}: {
+  handleNewGame: () => void;
+}) {
+  return (
+    <button className="newGameButton" onClick={handleNewGame}>
+      New Game
+    </button>
+  );
 }
