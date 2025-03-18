@@ -12,7 +12,7 @@ import { initializeTags, initializeKeyboard } from "../utils/helpers";
 
 export default function Main() {
   const [gameStatus, setGameStatus] = useState<string>("newGame"); //win gameOver newGame farewell
-  const tag = "HTML & CSS";
+  const tagToDismiss = useRef("");
   const [languageTags, setLanguageTags] = useState<tagProps[]>(() =>
     initializeTags()
   );
@@ -24,7 +24,7 @@ export default function Main() {
     initializeCurrentWord()
   );
 
-  const rounds = useRef(-1);
+  const rounds = useRef(0);
 
   function initializeCurrentWord() {
     //word status hidden good wrong
@@ -58,13 +58,18 @@ export default function Main() {
       })
     );
 
-    if (rounds.current < 8 && !exists) {
+    if (rounds.current < 9 && !exists) {
       setLanguageTags((prevTags) =>
-        prevTags.map((tag, index) =>
-          index === rounds.current ? { ...tag, isDismissed: true } : tag
-        )
+        prevTags.map((tag, index) => {
+          console.log("index", index);
+          console.log("current", rounds.current);
+          return index === rounds.current - 1
+            ? { ...tag, isDismissed: true }
+            : tag;
+        })
       );
-      rounds.current++;
+      tagToDismiss.current = languageTags[rounds.current].name;
+      setGameStatus("farewell");
       if (rounds.current >= 8) {
         setGameStatus("gameOver");
         setCurrentWord(
@@ -77,6 +82,7 @@ export default function Main() {
           })
         );
       }
+      rounds.current++;
     }
   }
 
@@ -84,10 +90,8 @@ export default function Main() {
     console.log("New game");
     setKeyboardKeys(initializeKeyboard());
     setLanguageTags(initializeTags());
-    console.log(rounds.current);
-    rounds.current = -1;
+    rounds.current = 0;
     setGameStatus("newGame");
-    rounds.current = -1;
     setCurrentWord(initializeCurrentWord());
 
     //TODO New word
@@ -96,14 +100,14 @@ export default function Main() {
   /**
    * //TODO array of words and get a random world
    * //TODO move to helper
-   * //TODO Add violet message when a tag is dismissed
+   * //TODO Add different messages when a tag is dismissed
    * //TODO add skull over dismissed tag-
    * //TODO GENERATE RANDOM WORDS
    */
 
   return (
     <main>
-      <GameStatus gameStatus={gameStatus} tagToDismiss={tag} />
+      <GameStatus gameStatus={gameStatus} tagToDismiss={tagToDismiss.current} />
       <Tags tagsList={languageTags} />
       <Word currentWord={currentWord} />
       <Keyboard
