@@ -40,12 +40,14 @@ export default function Main() {
       currentWord.map((prevLetter) => {
         if (prevLetter.letter === key) {
           exists = true;
+          setGameStatus("");
           return { ...prevLetter, status: "good" };
         } else {
           return prevLetter;
         }
       })
     );
+
     setKeyboardKeys(
       keyboardKeys.map((prevKey) => {
         if (prevKey.letter === key) {
@@ -61,8 +63,6 @@ export default function Main() {
     if (rounds.current < 9 && !exists) {
       setLanguageTags((prevTags) =>
         prevTags.map((tag, index) => {
-          console.log("index", index);
-          console.log("current", rounds.current);
           return index === rounds.current - 1
             ? { ...tag, isDismissed: true }
             : tag;
@@ -100,7 +100,6 @@ export default function Main() {
   /**
    * //TODO array of words and get a random world
    * //TODO move to helper
-   * //TODO Add different messages when a tag is dismissed
    * //TODO GENERATE RANDOM WORDS
    */
 
