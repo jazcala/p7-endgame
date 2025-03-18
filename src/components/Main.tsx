@@ -67,7 +67,15 @@ export default function Main() {
       rounds.current++;
       if (rounds.current >= 8) {
         setGameStatus("gameOver");
-        // TODO display missing letter in red
+        setCurrentWord(
+          currentWord.map((prevLetter) => {
+            if (prevLetter.status === "hidden") {
+              return { ...prevLetter, status: "wrong" };
+            } else {
+              return { ...prevLetter };
+            }
+          })
+        );
       }
     }
   }
@@ -88,7 +96,6 @@ export default function Main() {
   /**
    * //TODO array of words and get a random world
    * //TODO move to helper
-   * //TODO if game over - show missed letters in red
    * //TODO Add violet message when a tag is dismissed
    * //TODO add skull over dismissed tag-
    * //TODO GENERATE RANDOM WORDS
