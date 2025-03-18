@@ -1,5 +1,5 @@
 .container {
-  min-width: 600px;
+  max-width: 450px;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -79,6 +79,7 @@
       justify-content: center;
       flex-wrap: wrap;
       align-items: center;
+      gap: 5px;
 
       button {
         padding: 5px;
@@ -86,14 +87,31 @@
         font-size: 0.75rem;
         font-weight: 700;
         border: none;
-        margin: 2px;
+        position: relative;
+
+        &.isDismissed::before {
+          content: '💀';
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          width: 100%;
+          font-size: 0.85rem;
+          top: 0;
+          left: 0;
+          background-color: rgba(0, 0, 0, 0.7);
+          border-radius: 5px;
+        }
       }
     }
   }
 
   .word {
-    width: 480px;
-    text-align: center;
+    max-width: 480px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
 
     .letter {
       display: inline-flex;
@@ -102,7 +120,6 @@
       width: 40px;
       height: 40px;
       border-bottom: 1px solid #F9F4D4;
-      margin: 2px;
       padding: 5px;
       background-color: #323232;
       color: #F9F4D4;
@@ -115,11 +132,12 @@
   }
 
   .keyboard {
-    width: 480px;
+    max-width: 480px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin: 64px auto 36px;
+    gap: 8px;
 
     .key {
       width: 40px;
@@ -128,9 +146,9 @@
       text-transform: uppercase;
       border: 1px solid #D7D7D7;
       border-radius: 5px;
-      margin: 4px;
       font-size: 1rem;
       font-weight: 600;
+      cursor: pointer;
 
       &.good {
         background-color: #10A95B;
@@ -153,5 +171,6 @@
     font-weight: 600;
     font-size: 1rem;
     border: 1px solid #D7D7D7;
+    cursor: pointer;
   }
 }

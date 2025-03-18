@@ -4,6 +4,7 @@ export default function Tags({ tagsList }: { tagsList: tagProps[] }) {
     <section className="tagsList">
       {tagsList.map((tag) => (
         <button
+          className={tag.isDismissed ? "isDismissed" : ""}
           key={tag.id}
           style={{
             backgroundColor: `${tag.backgroundColor}`,

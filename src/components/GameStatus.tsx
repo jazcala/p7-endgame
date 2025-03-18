@@ -1,3 +1,4 @@
+import { getFarewellText } from "../utils/helpers";
 export default function GameStatus({
   gameStatus,
   tagToDismiss,
@@ -11,8 +12,7 @@ export default function GameStatus({
       <p className="secondLine">Well done! 🎉</p>
     </>
   );
-  const messageForFarewell = //TODO Pass down tag
-    <p>{`"Farewell ${tagToDismiss}"`} 🫡</p>;
+  const messageForFarewell = <p>{getFarewellText(tagToDismiss)} 🫡</p>;
 
   const messageForGameOver = (
     <>
@@ -21,19 +21,20 @@ export default function GameStatus({
     </>
   );
 
-  function setMessage(gameStatus: string) {
+  function setMessage() {
     if (gameStatus === "win") {
       return messageForWin;
-    } else if (gameStatus === "farewell") {
-      return messageForFarewell;
     } else if (gameStatus === "gameOver") {
       return messageForGameOver;
+    } else if (tagToDismiss) {
+      gameStatus = "farewell";
+      return messageForFarewell;
     }
   }
 
   return (
     <section className={`messageContainer ${gameStatus}`}>
-      {setMessage(gameStatus)}
+      {setMessage()}
     </section>
   );
 }

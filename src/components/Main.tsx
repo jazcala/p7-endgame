@@ -1,60 +1,114 @@
+import { useState, useRef } from "react";
+
 import GameStatus from "./GameStatus";
-import languagetagsData from "../data/tagsData.json";
-import { useState } from "react";
 import Tags from "./Tags";
-import { tagProps, keyboardProps, letterProps } from "../types/types";
-import NewGameButton from "./NewGameButton";
-import Keyboard from "./Keyboard";
-import { nanoid } from "nanoid";
 import Word from "./Word";
+import Keyboard from "./Keyboard";
+import NewGameButton from "./NewGameButton";
+
+import { tagProps, keyboardProps, letterProps } from "../types/types";
+import {
+  initializeTags,
+  initializeKeyboard,
+  initializeCurrentWord,
+} from "../utils/helpers";
 
 export default function Main() {
-  //testing values
-  const gameStatus: string = "gameOver"; // "farewell" "win" "gameOver"
-  const tag = "HTML & CSS";
   const [languageTags, setLanguageTags] = useState<tagProps[]>(() =>
     initializeTags()
   );
-  const alphabetLetters = "abcdefghijklmnopqrstuvwxyz";
   const [keyboardKeys, setKeyboardKeys] = useState<keyboardProps[]>(() =>
     initializeKeyboard()
   );
-  const word = "ELEPHANT";
-
   const [currentWord, setCurrentWord] = useState<letterProps[]>(() =>
     initializeCurrentWord()
   );
 
-  // const word:string = "refactor";
-  // const [keyboard,setKeyboard]
-  function initializeTags() {
-    return languagetagsData.map((tag) => ({
-      id: nanoid(),
-      ...tag,
-      isDismissed: true,
-    }));
-  }
-  function initializeKeyboard() {
-    //key status default , good, wrong
-    return alphabetLetters
-      .split("")
-      .map((letter) => ({ id: nanoid(), letter, status: "" }));
+  let gameStatus = "newGame";
+  const tagToDismiss = useRef("");
+  const rounds = useRef(0);
+
+  function handleSelectKey(key: string) {
+    let exists: boolean = false;
+    setCurrentWord(
+      currentWord.map((prevLetter) => {
+        if (prevLetter.letter === key) {
+          exists = true;
+          gameStatus = "";
+          return { ...prevLetter, status: "good" };
+        } else {
+          return prevLetter;
+        }
+      })
+    );
+
+    setKeyboardKeys(
+      keyboardKeys.map((prevKey) => {
+        if (prevKey.letter === key) {
+          return exists
+            ? { ...prevKey, status: "good" }
+            : { ...prevKey, status: "wrong" };
+        } else {
+          return prevKey;
+        }
+      })
+    );
+    if (rounds.current < 9 && !exists) {
+      setLanguageTags((prevTags) =>
+        prevTags.map((tag, index) => {
+          return index === rounds.current - 1
+            ? { ...tag, isDismissed: true }
+            : tag;
+        })
+      );
+
+      tagToDismiss.current = languageTags[rounds.current].name;
+      if (rounds.current >= 8) {
+        setCurrentWord(
+          currentWord.map((prevLetter) => {
+            if (prevLetter.status === "hidden") {
+              return { ...prevLetter, status: "wrong" };
+            } else {
+              return { ...prevLetter };
+            }
+          })
+        );
+      }
+      rounds.current++;
+    }
   }
 
-  function initializeCurrentWord() {
-    //word status hidden good wrong
-    return word
-      .split("")
-      .map((letter) => ({ id: nanoid(), letter, status: "hidden" }));
+  const allGood = currentWord.every((letter) => letter.status === "good");
+  if (allGood) {
+    gameStatus = "win";
+  } else if (rounds.current > 8) {
+    gameStatus = "gameOver";
+  } else if (rounds.current > 0 && tagToDismiss) {
+    gameStatus = "farewell";
+  }
+
+  function handleNewGame() {
+    setKeyboardKeys(initializeKeyboard());
+    setLanguageTags(initializeTags());
+    rounds.current = 0;
+    gameStatus = "newGame";
+    setCurrentWord(initializeCurrentWord());
+    tagToDismiss.current = "";
   }
 
   return (
     <main>
-      <GameStatus gameStatus={gameStatus} tagToDismiss={tag} />
+      <GameStatus gameStatus={gameStatus} tagToDismiss={tagToDismiss.current} />
       <Tags tagsList={languageTags} />
       <Word currentWord={currentWord} />
-      <Keyboard keyboardKeys={keyboardKeys} />
-      {(gameStatus === "win" || gameStatus === "gameOver") && <NewGameButton />}
+      <Keyboard
+        keyboardKeys={keyboardKeys}
+        handleSelectKey={handleSelectKey}
+        gameStatus={gameStatus}
+      />
+      {(gameStatus === "win" || gameStatus === "gameOver") && (
+        <NewGameButton handleNewGame={handleNewGame} />
+      )}
     </main>
   );
 }
