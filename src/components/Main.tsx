@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { nanoid } from "nanoid";
 
 import GameStatus from "./GameStatus";
 import Tags from "./Tags";
@@ -8,39 +7,34 @@ import Keyboard from "./Keyboard";
 import NewGameButton from "./NewGameButton";
 
 import { tagProps, keyboardProps, letterProps } from "../types/types";
-import { initializeTags, initializeKeyboard } from "../utils/helpers";
+import {
+  initializeTags,
+  initializeKeyboard,
+  initializeCurrentWord,
+} from "../utils/helpers";
 
 export default function Main() {
-  const [gameStatus, setGameStatus] = useState<string>("newGame"); //win gameOver newGame farewell
-  const tagToDismiss = useRef("");
+  let gameStatus = "newGame";
   const [languageTags, setLanguageTags] = useState<tagProps[]>(() =>
     initializeTags()
   );
   const [keyboardKeys, setKeyboardKeys] = useState<keyboardProps[]>(() =>
     initializeKeyboard()
   );
-  const word = "ELEPHANT";
   const [currentWord, setCurrentWord] = useState<letterProps[]>(() =>
     initializeCurrentWord()
   );
 
+  const tagToDismiss = useRef("");
   const rounds = useRef(0);
 
-  function initializeCurrentWord() {
-    //word status hidden good wrong
-    return word
-      .split("")
-      .map((letter) => ({ id: nanoid(), letter, status: "hidden" }));
-  }
-
   function handleSelectKey(key: string) {
-    //TODO need to add styles for dismissed tag.
     let exists: boolean = false;
     setCurrentWord(
       currentWord.map((prevLetter) => {
         if (prevLetter.letter === key) {
           exists = true;
-          setGameStatus("");
+          gameStatus = "";
           return { ...prevLetter, status: "good" };
         } else {
           return prevLetter;
@@ -59,7 +53,6 @@ export default function Main() {
         }
       })
     );
-
     if (rounds.current < 9 && !exists) {
       setLanguageTags((prevTags) =>
         prevTags.map((tag, index) => {
@@ -68,10 +61,9 @@ export default function Main() {
             : tag;
         })
       );
+
       tagToDismiss.current = languageTags[rounds.current].name;
-      setGameStatus("farewell");
       if (rounds.current >= 8) {
-        setGameStatus("gameOver");
         setCurrentWord(
           currentWord.map((prevLetter) => {
             if (prevLetter.status === "hidden") {
@@ -86,22 +78,22 @@ export default function Main() {
     }
   }
 
+  const allGood = currentWord.every((letter) => letter.status === "good");
+  if (allGood) {
+    gameStatus = "win";
+  } else if (rounds.current > 8) {
+    gameStatus = "gameOver";
+  } else if (rounds.current > 0 && tagToDismiss) {
+    gameStatus = "farewell";
+  }
+
   function handleNewGame() {
-    console.log("New game");
     setKeyboardKeys(initializeKeyboard());
     setLanguageTags(initializeTags());
     rounds.current = 0;
-    setGameStatus("newGame");
+    gameStatus = "newGame";
     setCurrentWord(initializeCurrentWord());
-
-    //TODO New word
   }
-
-  /**
-   * //TODO array of words and get a random world
-   * //TODO move to helper
-   * //TODO GENERATE RANDOM WORDS
-   */
 
   return (
     <main>

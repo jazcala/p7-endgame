@@ -1,4 +1,5 @@
 import languagetagsData from "../data/tagsData.json";
+import words from "../data/words.json";
 import { nanoid } from "nanoid";
 
 export function initializeTags() {
@@ -9,7 +10,7 @@ export function initializeTags() {
   }));
 }
 
-const alphabetLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const alphabetLetters = "abcdefghijklmnopqrstuvwxyz";
 
 export function initializeKeyboard() {
   //key status default , good, wrong
@@ -36,4 +37,18 @@ export function getFarewellText(language: string) {
 
   const randomIndex = Math.floor(Math.random() * options.length);
   return options[randomIndex];
+}
+
+function getWord() {
+  const randomIndex = Math.floor(Math.random() * words.length);
+  return words[randomIndex]
+}
+
+
+export function initializeCurrentWord() {
+  //word status hidden good wrong
+  const word = getWord();
+  return word
+    .split("")
+    .map((letter) => ({ id: nanoid(), letter, status: "hidden" }));
 }

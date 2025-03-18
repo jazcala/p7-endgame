@@ -21,19 +21,20 @@ export default function GameStatus({
     </>
   );
 
-  function setMessage(gameStatus: string) {
+  function setMessage() {
     if (gameStatus === "win") {
       return messageForWin;
-    } else if (gameStatus === "farewell") {
-      return messageForFarewell;
     } else if (gameStatus === "gameOver") {
       return messageForGameOver;
+    } else if (tagToDismiss) {
+      gameStatus = "farewell";
+      return messageForFarewell;
     }
   }
 
   return (
     <section className={`messageContainer ${gameStatus}`}>
-      {setMessage(gameStatus)}
+      {setMessage()}
     </section>
   );
 }
