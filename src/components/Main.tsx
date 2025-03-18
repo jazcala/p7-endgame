@@ -101,7 +101,6 @@ export default function Main() {
    * //TODO array of words and get a random world
    * //TODO move to helper
    * //TODO Add different messages when a tag is dismissed
-   * //TODO add skull over dismissed tag-
    * //TODO GENERATE RANDOM WORDS
    */
 
