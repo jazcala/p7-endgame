@@ -14,7 +14,6 @@ import {
 } from "../utils/helpers";
 
 export default function Main() {
-  let gameStatus = "newGame";
   const [languageTags, setLanguageTags] = useState<tagProps[]>(() =>
     initializeTags()
   );
@@ -25,6 +24,7 @@ export default function Main() {
     initializeCurrentWord()
   );
 
+  let gameStatus = "newGame";
   const tagToDismiss = useRef("");
   const rounds = useRef(0);
 
@@ -93,6 +93,7 @@ export default function Main() {
     rounds.current = 0;
     gameStatus = "newGame";
     setCurrentWord(initializeCurrentWord());
+    tagToDismiss.current = "";
   }
 
   return (
