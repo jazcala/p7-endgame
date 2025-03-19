@@ -21,7 +21,7 @@ export default function GameStatus({
     </>
   );
 
-  function setMessage() {
+  function getMessage() {
     if (gameStatus === "win") {
       return messageForWin;
     } else if (gameStatus === "gameOver") {
@@ -31,14 +31,14 @@ export default function GameStatus({
       return messageForFarewell;
     }
   }
-
+  const message = getMessage();
   return (
     <section
       aria-live="polite"
       role="status"
-      className={`messageContainer ${gameStatus}`}
+      className={`messageContainer ${message ? gameStatus : ""}`}
     >
-      {setMessage()}
+      {message}
     </section>
   );
 }
