@@ -1,12 +1,13 @@
 .container {
-  max-width: 450px;
+  max-width: 400px;
+  width: 100%;
+
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 4.56rem;
-
 
   header {
     width: 350px;
@@ -36,14 +37,13 @@
 
     .messageContainer {
       width: 350px;
-      height: auto;
+      height: 70px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       border-radius: 10px;
       padding: 10px;
-
 
       &.win {
         background-color: #10A95B;
@@ -127,12 +127,11 @@
       &.wrong {
         color: #EC5D49;
       }
-
     }
   }
 
   .keyboard {
-    max-width: 480px;
+    max-width: 400px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -173,4 +172,17 @@
     border: 1px solid #D7D7D7;
     cursor: pointer;
   }
+}
+
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

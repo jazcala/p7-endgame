@@ -35,6 +35,7 @@ export default function Main() {
         if (prevLetter.letter === key) {
           exists = true;
           gameStatus = "";
+          tagToDismiss.current = "";
           return { ...prevLetter, status: "good" };
         } else {
           return prevLetter;
@@ -53,6 +54,7 @@ export default function Main() {
         }
       })
     );
+
     if (rounds.current < 9 && !exists) {
       setLanguageTags((prevTags) =>
         prevTags.map((tag, index) => {
