@@ -1,5 +1,7 @@
 .container {
-  max-width: 450px;
+  max-width: 400px;
+  width: 100%;
+
   height: auto;
   display: flex;
   flex-direction: column;
@@ -42,7 +44,6 @@
       align-items: center;
       border-radius: 10px;
       padding: 10px;
-
 
       &.win {
         background-color: #10A95B;
@@ -126,12 +127,11 @@
       &.wrong {
         color: #EC5D49;
       }
-
     }
   }
 
   .keyboard {
-    max-width: 480px;
+    max-width: 400px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
