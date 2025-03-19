@@ -33,7 +33,11 @@ export default function GameStatus({
   }
 
   return (
-    <section className={`messageContainer ${gameStatus}`}>
+    <section
+      aria-live="polite"
+      role="status"
+      className={`messageContainer ${gameStatus}`}
+    >
       {setMessage()}
     </section>
   );

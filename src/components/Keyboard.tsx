@@ -1,4 +1,5 @@
 import { keyboardProps } from "../types/types";
+import KeyboardButton from "./KeyboardButton";
 
 export default function Keyboard({
   keyboardKeys,
@@ -9,31 +10,16 @@ export default function Keyboard({
   handleSelectKey: (letter: string) => void;
   gameStatus: string;
 }) {
-  function disableKey(key: keyboardProps) {
-    if (
-      gameStatus === "gameOver" ||
-      key.status === "good" ||
-      key.status === "wrong"
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
   return (
     <section className="keyboard">
-      {keyboardKeys.map((key) => (
-        <button
-          key={key.letter}
-          className={`key ${key.status}`}
-          disabled={disableKey(key)}
-          onClick={() => handleSelectKey(key.letter)}
-        >
-          {key.letter}
-        </button>
+      {keyboardKeys.map((key: keyboardProps, index) => (
+        <KeyboardButton
+          key={index}
+          keyAttributes={key}
+          handleSelectKey={handleSelectKey}
+          gameStatus={gameStatus}
+        />
       ))}
     </section>
   );
 }
-
-// key.status === "good" || key.status === "wrong" ? true : false
