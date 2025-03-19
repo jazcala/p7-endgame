@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import Confetti from "react-confetti";
 
 import GameStatus from "./GameStatus";
 import Tags from "./Tags";
@@ -100,6 +101,7 @@ export default function Main() {
 
   return (
     <main>
+      {gameStatus === "win" && <Confetti />}
       <GameStatus gameStatus={gameStatus} tagToDismiss={tagToDismiss.current} />
       <Tags tagsList={languageTags} />
       <Word currentWord={currentWord} />
