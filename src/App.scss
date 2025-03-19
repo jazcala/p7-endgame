@@ -1,5 +1,6 @@
 .container {
-  max-width: 400px;
+  max-width: 600px;
+  min-width: 400px;
   width: 100%;
 
   height: auto;
@@ -131,7 +132,9 @@
   }
 
   .keyboard {
-    max-width: 400px;
+    max-width: 480px;
+    min-width: 400px;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
